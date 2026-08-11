@@ -1,0 +1,335 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import Icono from './Icono.astro';
+import { waLink } from '../data/site.js';
+
+// Suelta el recorte del astronauta en src/assets/astronauta.png (o .webp)
+// y aparece automáticamente sobre la composición orbital.
+const encontrado = import.meta.glob(
+  '../assets/astronauta.{png,webp,jpg,jpeg}',
+  { eager: true }
+);
+const astronauta = Object.values(encontrado)[0]?.default;
+---
+
+<section class="hero" id="hero">
+  <div class="malla"></div>
+  <div class="glow glow-azul g1"></div>
+  <div class="glow glow-lima g2"></div>
+
+  <div class="contenedor rejilla">
+    <div class="texto">
+      <p class="ante reveal">Marketing digital de alto rendimiento</p>
+
+      <h1 class="h1 reveal" style="--d:80ms">
+        No te vamos a prometer likes.<br />
+        <span class="acento">Te vamos a traer ventas.</span>
+      </h1>
+
+      <p class="plomo reveal" style="--d:160ms">
+        Somos la agencia que fusiona Inteligencia Artificial, datos y estrategia
+        para poner tu marca justo donde tus clientes ya están comprando. 16 años
+        de resultados nos respaldan.
+      </p>
+
+      <div class="grupo-cta reveal" style="--d:240ms">
+        <a class="btn btn-lima" href={waLink()} target="_blank" rel="noopener">
+          <IconoWhatsapp tam={20} />
+          Hablar por WhatsApp
+        </a>
+        <a class="btn btn-linea" href="#motores">
+          Ver cómo lo hacemos
+          <Icono nombre="flecha" tam={18} />
+        </a>
+      </div>
+
+      <div class="sellos reveal" style="--d:320ms">
+        <span class="sello">
+          <span class="punto"></span>
+          Meta Business Partner
+        </span>
+        <span class="sello">
+          <span class="punto"></span>
+          Google Partner Premier 2026
+        </span>
+      </div>
+    </div>
+
+    <!-- Composición orbital: el "espacio" de la marca, en datos -->
+    <div class="visual reveal" style="--d:200ms" data-parallax aria-hidden="true">
+      <div class="planeta"></div>
+      <div class="orbita o1"><span class="satelite"></span></div>
+      <div class="orbita o2"><span class="satelite s2"></span></div>
+
+      {
+        astronauta && (
+          <img
+            class="astronauta"
+            src={astronauta.src}
+            width={astronauta.width}
+            height={astronauta.height}
+            alt=""
+            fetchpriority="high"
+          />
+        )
+      }
+
+      <div class="chip c1">
+        <span class="etq">ROAS</span>
+        <strong>6.4×</strong>
+      </div>
+      <div class="chip c2">
+        <span class="etq">Costo por lead</span>
+        <strong>−38%</strong>
+      </div>
+      <div class="chip c3">
+        <span class="etq">Conversiones</span>
+        <strong class="sube">↑ 212%</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(7rem, 12vw, 9.5rem) clamp(3rem, 7vw, 5rem);
+    overflow: hidden;
+  }
+
+  .g1 {
+    width: 46rem;
+    height: 34rem;
+    top: -14rem;
+    right: -12rem;
+  }
+
+  .g2 {
+    width: 30rem;
+    height: 24rem;
+    bottom: -12rem;
+    left: -10rem;
+  }
+
+  .rejilla {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: clamp(3rem, 6vw, 4rem);
+    align-items: center;
+  }
+
+  .texto {
+    max-width: 46rem;
+  }
+
+  .h1 {
+    margin-bottom: 1.6rem;
+  }
+
+  .plomo {
+    margin-bottom: 2.4rem;
+  }
+
+  /* --- Sellos de confianza --- */
+
+  .sellos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2.2rem;
+  }
+
+  .sello {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid var(--borde);
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--txt-2);
+  }
+
+  .punto {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--lima);
+    flex: none;
+  }
+
+  /* --- Composición visual --- */
+
+  .visual {
+    position: relative;
+    aspect-ratio: 1;
+    max-width: 34rem;
+    margin-inline: auto;
+    width: 100%;
+    transform: translateY(var(--py, 0px));
+  }
+
+  .planeta {
+    position: absolute;
+    inset: 16%;
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 32% 28%,
+        rgba(111, 141, 255, 0.55),
+        rgba(26, 75, 255, 0.22) 46%,
+        transparent 68%
+      ),
+      radial-gradient(circle at 50% 50%, rgba(10, 19, 48, 0.9), transparent 70%);
+    box-shadow:
+      inset 0 0 90px rgba(26, 75, 255, 0.5),
+      0 0 120px rgba(26, 75, 255, 0.35);
+  }
+
+  .orbita {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: girar 26s linear infinite;
+  }
+
+  .o2 {
+    inset: 13%;
+    border-color: rgba(195, 245, 60, 0.16);
+    animation-duration: 18s;
+    animation-direction: reverse;
+  }
+
+  .satelite {
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    border-radius: 50%;
+    background: var(--lima);
+    box-shadow: 0 0 18px 3px rgba(195, 245, 60, 0.8);
+  }
+
+  .s2 {
+    background: var(--azul-light);
+    box-shadow: 0 0 18px 3px rgba(111, 141, 255, 0.8);
+  }
+
+  @keyframes girar {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .astronauta {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.6));
+    animation: flotar 9s ease-in-out infinite;
+  }
+
+  /* --- Chips de métrica flotantes (glassmorphism) --- */
+
+  .chip {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.7rem 1.05rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--borde-hi);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 18px 44px -20px rgba(0, 0, 0, 0.9);
+    animation: flotar 7s ease-in-out infinite;
+  }
+
+  .etq {
+    font-size: 0.63rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--txt-3);
+  }
+
+  .chip strong {
+    font-family: var(--f-display);
+    font-size: 1.2rem;
+    letter-spacing: -0.03em;
+  }
+
+  .sube {
+    color: var(--lima);
+  }
+
+  .c1 {
+    top: 6%;
+    left: -2%;
+  }
+
+  .c2 {
+    bottom: 20%;
+    right: -3%;
+    animation-delay: -2.4s;
+  }
+
+  .c3 {
+    bottom: 1%;
+    left: 12%;
+    animation-delay: -4.8s;
+  }
+
+  @keyframes flotar {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+
+  @media (min-width: 980px) {
+    .rejilla {
+      grid-template-columns: 1.05fr 0.95fr;
+    }
+  }
+</style>
+
+<script>
+  // Parallax suave de la composición orbital
+  const capa = document.querySelector('[data-parallax]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (capa && !reduce.matches) {
+    let pendiente = false;
+
+    const mover = () => {
+      const y = window.scrollY;
+      if (y < window.innerHeight * 1.3) {
+        capa.style.setProperty('--py', `${y * -0.09}px`);
+      }
+      pendiente = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!pendiente) {
+          pendiente = true;
+          requestAnimationFrame(mover);
+        }
+      },
+      { passive: true }
+    );
+  }
+</script>

@@ -1,0 +1,142 @@
+---
+import { metricas } from '../data/site.js';
+---
+
+<section class="barra" aria-label="Métricas de Futurité">
+  <div class="contenedor rejilla">
+    {
+      metricas.map((m, i) => (
+        <div class="dato reveal" style={`--d:${i * 90}ms`}>
+          <p class="cifra">
+            <span class="fijo">{m.prefijo}</span>
+            <span
+              class="contador"
+              data-contador={m.valor}
+              aria-label={`${m.prefijo}${m.valor}${m.sufijo}`}
+            >
+              0
+            </span>
+            <span class="fijo">{m.sufijo}</span>
+          </p>
+          <p class="etq">{m.etiqueta}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .barra {
+    position: relative;
+    background: var(--navy-deep);
+    border-block: 1px solid var(--borde);
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .rejilla {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  .dato {
+    position: relative;
+    text-align: center;
+  }
+
+  /* Separadores finos entre columnas, como panel de control */
+  .dato + .dato::before {
+    content: '';
+    position: absolute;
+    left: calc(-1 * clamp(0.875rem, 2vw, 1.25rem));
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: var(--borde);
+  }
+
+  .cifra {
+    font-family: var(--f-display);
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--lima);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.5rem;
+  }
+
+  .fijo {
+    color: var(--lima);
+  }
+
+  .etq {
+    font-size: 0.85rem;
+    color: var(--txt-3);
+    line-height: 1.4;
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 780px) {
+    .rejilla {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* En 2 columnas el separador de la 3ª sobra; en 4 lo queremos todo */
+    .dato:nth-child(3)::before {
+      display: block;
+    }
+  }
+
+  @media (max-width: 779px) {
+    .dato:nth-child(3)::before {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Contadores: arrancan cuando la barra entra en pantalla
+  const nodos = document.querySelectorAll('[data-contador]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const pintar = (nodo) => {
+    const fin = Number(nodo.dataset.contador);
+
+    if (reduce.matches) {
+      nodo.textContent = String(fin);
+      return;
+    }
+
+    const duracion = 1600;
+    const inicio = performance.now();
+
+    const paso = (ahora) => {
+      const t = Math.min(1, (ahora - inicio) / duracion);
+      // easeOutExpo: arranca rápido y frena — se siente "vivo"
+      const e = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+      nodo.textContent = String(Math.round(fin * e));
+      if (t < 1) requestAnimationFrame(paso);
+    };
+
+    requestAnimationFrame(paso);
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    nodos.forEach(pintar);
+  } else {
+    const io = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((e) => {
+          if (e.isIntersecting) {
+            pintar(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    nodos.forEach((n) => io.observe(n));
+  }
+</script>

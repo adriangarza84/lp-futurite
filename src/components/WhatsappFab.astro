@@ -1,0 +1,119 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { waLink } from '../data/site.js';
+---
+
+<!-- Botón flotante: aparece al pasar el hero y se expande al hacer hover -->
+<a
+  class="fab"
+  data-fab
+  href={waLink()}
+  target="_blank"
+  rel="noopener"
+  aria-label="Escríbenos por WhatsApp"
+>
+  <span class="halo" aria-hidden="true"></span>
+  <IconoWhatsapp tam={26} />
+  <span class="texto">Escríbenos</span>
+</a>
+
+<style>
+  .fab {
+    position: fixed;
+    right: clamp(1rem, 3vw, 1.75rem);
+    bottom: clamp(1rem, 3vw, 1.75rem);
+    z-index: 90;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.95rem;
+    border-radius: 999px;
+    background: #25d366;
+    color: #fff;
+    box-shadow: 0 16px 40px -12px rgba(37, 211, 102, 0.75);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(14px) scale(0.9);
+    transition:
+      opacity 0.45s var(--ease),
+      transform 0.45s var(--ease),
+      visibility 0.45s,
+      padding 0.4s var(--ease);
+  }
+
+  .fab.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .halo {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid #25d366;
+    animation: halo 3s var(--ease) infinite;
+    pointer-events: none;
+  }
+
+  @keyframes halo {
+    0% {
+      transform: scale(1);
+      opacity: 0.6;
+    }
+    60%,
+    100% {
+      transform: scale(1.45);
+      opacity: 0;
+    }
+  }
+
+  .texto {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 0.92rem;
+    transition:
+      max-width 0.45s var(--ease),
+      margin-right 0.45s var(--ease);
+    margin-right: -0.6rem;
+  }
+
+  .fab:hover,
+  .fab:focus-visible {
+    padding-inline: 1.2rem 1.4rem;
+  }
+
+  .fab:hover .texto,
+  .fab:focus-visible .texto {
+    max-width: 8rem;
+    margin-right: 0;
+  }
+</style>
+
+<script>
+  const fab = document.querySelector('[data-fab]');
+  let pendiente = false;
+
+  const revisar = () => {
+    fab.classList.toggle('visible', window.scrollY > window.innerHeight * 0.6);
+    pendiente = false;
+  };
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!pendiente) {
+        pendiente = true;
+        requestAnimationFrame(revisar);
+      }
+    },
+    { passive: true }
+  );
+
+  revisar();
+</script>

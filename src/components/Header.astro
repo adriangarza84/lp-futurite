@@ -1,0 +1,166 @@
+---
+import Logo from './Logo.astro';
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { waLink } from '../data/site.js';
+
+const enlaces = [
+  { texto: 'Servicios', href: '#motores' },
+  { texto: 'Por qué nosotros', href: '#diferenciador' },
+  { texto: 'Clientes', href: '#clientes' },
+  { texto: 'Proceso', href: '#proceso' },
+];
+---
+
+<header class="cab" id="cab" data-cab>
+  <div class="contenedor fila">
+    <a href="#hero" class="marca" aria-label="Futurité — inicio">
+      <Logo alto={30} color="#ffffff" colorRombo="rgba(111,141,255,.55)" />
+    </a>
+
+    <nav class="nav" aria-label="Secciones">
+      {enlaces.map((e) => <a href={e.href}>{e.texto}</a>)}
+    </nav>
+
+    <a
+      class="btn btn-lima btn-cab"
+      href={waLink()}
+      target="_blank"
+      rel="noopener"
+    >
+      <IconoWhatsapp tam={18} />
+      <span>Hablar por WhatsApp</span>
+    </a>
+  </div>
+
+  <!-- Barra de progreso de lectura: refuerza la sensación de avance -->
+  <div class="progreso" data-progreso aria-hidden="true"></div>
+</header>
+
+<style>
+  .cab {
+    position: fixed;
+    inset: 0 0 auto;
+    z-index: 100;
+    transition:
+      background-color 0.4s var(--ease),
+      backdrop-filter 0.4s var(--ease),
+      border-color 0.4s var(--ease);
+    border-bottom: 1px solid transparent;
+  }
+
+  .cab.pegado {
+    background: rgba(6, 12, 34, 0.72);
+    backdrop-filter: blur(18px) saturate(150%);
+    border-bottom-color: var(--borde);
+  }
+
+  .fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.1rem;
+  }
+
+  .marca {
+    flex: none;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .marca:hover {
+    transform: scale(1.04);
+  }
+
+  .nav {
+    display: none;
+    gap: 2rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--txt-2);
+  }
+
+  .nav a {
+    position: relative;
+    padding-block: 0.3rem;
+    transition: color 0.3s var(--ease);
+  }
+
+  .nav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--lima);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease);
+  }
+
+  .nav a:hover {
+    color: #fff;
+  }
+
+  .nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  .btn-cab {
+    padding: 0.72rem 1.3rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-cab span {
+    display: none;
+  }
+
+  .progreso {
+    height: 2px;
+    width: var(--p, 0%);
+    background: linear-gradient(90deg, var(--azul), var(--lima));
+    transition: width 0.1s linear;
+  }
+
+  @media (min-width: 620px) {
+    .btn-cab span {
+      display: inline;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .nav {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const cab = document.querySelector('[data-cab]');
+  const barra = document.querySelector('[data-progreso]');
+  let pendiente = false;
+
+  const actualizar = () => {
+    const y = window.scrollY;
+    cab.classList.toggle('pegado', y > 24);
+
+    const alcance = document.body.scrollHeight - window.innerHeight;
+    const pct = alcance > 0 ? Math.min(1, y / alcance) * 100 : 0;
+    barra.style.setProperty('--p', `${pct}%`);
+
+    pendiente = false;
+  };
+
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!pendiente) {
+        pendiente = true;
+        requestAnimationFrame(actualizar);
+      }
+    },
+    { passive: true }
+  );
+
+  actualizar();
+</script>

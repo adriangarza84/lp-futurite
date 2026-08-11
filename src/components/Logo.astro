@@ -1,0 +1,75 @@
+---
+// Isotipo Futurité: dos chevrones enfrentados que forman la "X".
+// Se dibuja dos veces —trazo grueso en tono claro debajo, trazo fino encima—
+// para reproducir el contorno del logo original.
+const {
+  alto = 34,
+  soloIso = false,
+  color = 'currentColor',
+  colorRombo = 'rgba(255,255,255,.4)',
+} = Astro.props;
+
+const chevrones = 'M17 16 32 31 47 16M17 48 32 33 47 48';
+---
+
+<span class="logo" style={`--alto:${alto}px`} aria-label="Futurité">
+  <svg
+    class="iso"
+    viewBox="0 0 64 64"
+    fill="none"
+    aria-hidden="true"
+    role="presentation"
+  >
+    <path
+      d={chevrones}
+      stroke={colorRombo}
+      stroke-width="19"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+    <path
+      d={chevrones}
+      stroke={color}
+      stroke-width="9"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+  </svg>
+
+  {
+    !soloIso && (
+      <svg class="palabra" viewBox="0 0 300 64" fill="none" aria-hidden="true">
+        <text
+          x="0"
+          y="46"
+          fill={color}
+          font-family="'Plus Jakarta Sans', sans-serif"
+          font-size="46"
+          font-weight="800"
+          letter-spacing="-2"
+        >
+          Futurité
+        </text>
+      </svg>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    height: var(--alto);
+  }
+
+  .iso {
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1;
+  }
+
+  .palabra {
+    height: 78%;
+    width: auto;
+    aspect-ratio: 300 / 64;
+  }
+</style>

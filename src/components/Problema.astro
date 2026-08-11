@@ -1,0 +1,97 @@
+---
+import Icono from './Icono.astro';
+import { waLink } from '../data/site.js';
+---
+
+<section class="seccion problema" id="problema">
+  <div class="glow glow-azul g"></div>
+
+  <div class="contenedor">
+    <div class="marco">
+      <span class="insignia reveal">
+        <Icono nombre="alerta" tam={17} />
+        El costo de no aparecer
+      </span>
+
+      <h2 class="h2 reveal" style="--d:80ms">
+        Tener presencia digital<br />
+        <span class="acento">ya no es suficiente.</span>
+      </h2>
+
+      <div class="parrafos">
+        <p class="reveal" style="--d:160ms">
+          Tu competencia ya está invirtiendo. Cada día que tu negocio no aparece
+          en las búsquedas, no pauta con estrategia o publica contenido que nadie
+          convierte, <strong>le estás regalando clientes a alguien más.</strong>
+        </p>
+        <p class="reveal" style="--d:220ms">
+          El problema casi nunca es tu producto. Es que nadie te encuentra —o
+          cuando te encuentra, nada lo empuja a comprar.
+        </p>
+      </div>
+
+      <p class="reveal" style="--d:280ms">
+        <a class="cta-linea" href={waLink('Hola, quiero saber dónde estoy perdiendo ventas')} target="_blank" rel="noopener">
+          ¿Quieres saber dónde estás perdiendo ventas? Escríbenos por WhatsApp
+          <Icono nombre="flecha" tam={18} />
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problema {
+    overflow: hidden;
+  }
+
+  .g {
+    width: 34rem;
+    height: 26rem;
+    top: 20%;
+    left: -14rem;
+    opacity: 0.55;
+  }
+
+  .marco {
+    position: relative;
+    z-index: 1;
+    max-width: 56rem;
+    /* Línea de acento a la izquierda: marca el bloque de tensión */
+    border-left: 2px solid rgba(195, 245, 60, 0.35);
+    padding-left: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .insignia {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: rgba(195, 245, 60, 0.08);
+    border: 1px solid rgba(195, 245, 60, 0.25);
+    color: var(--lima);
+    font-family: var(--f-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.6rem;
+  }
+
+  .parrafos {
+    margin-block: 2rem 2.2rem;
+    display: grid;
+    gap: 1.2rem;
+    max-width: 48rem;
+  }
+
+  .parrafos p {
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    color: var(--txt-2);
+  }
+
+  .parrafos strong {
+    color: #fff;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { site, waLink } from '../data/site.js';
+
+// Mismo mecanismo que el hero: si existe el recorte, se usa.
+const encontrado = import.meta.glob(
+  '../assets/astronauta-cierre.{png,webp,jpg,jpeg}',
+  { eager: true }
+);
+const astronauta = Object.values(encontrado)[0]?.default;
+---
+
+<section class="cierre" id="contacto">
+  <div class="malla"></div>
+  <div class="glow glow-lima g1"></div>
+  <div class="glow glow-azul g2"></div>
+
+  <div class="contenedor">
+    <div class="caja">
+      {
+        astronauta && (
+          <img
+            class="astronauta"
+            src={astronauta.src}
+            width={astronauta.width}
+            height={astronauta.height}
+            alt=""
+            loading="lazy"
+          />
+        )
+      }
+
+      <h2 class="titulo reveal">
+        Transforma tu visión en<br />
+        <span class="acento">resultados tangibles.</span>
+      </h2>
+
+      <p class="plomo reveal" style="--d:100ms">
+        Cada día sin estrategia es un día de ventas perdidas. Empecemos hoy.
+      </p>
+
+      <a
+        class="btn btn-lima gigante reveal"
+        style="--d:180ms"
+        href={waLink()}
+        target="_blank"
+        rel="noopener"
+      >
+        <IconoWhatsapp tam={24} />
+        Escalar mi negocio por WhatsApp
+      </a>
+
+      <p class="nota reveal" style="--d:240ms">
+        Respuesta en minutos, en horario laboral. · {site.whatsappVisible}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cierre {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(5rem, 11vw, 9rem);
+    background: var(--navy-deep);
+    border-top: 1px solid var(--borde);
+  }
+
+  .g1 {
+    width: 44rem;
+    height: 30rem;
+    bottom: -16rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.9;
+  }
+
+  .g2 {
+    width: 34rem;
+    height: 26rem;
+    top: -12rem;
+    right: -10rem;
+  }
+
+  .caja {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    gap: 1.5rem;
+  }
+
+  .astronauta {
+    width: min(220px, 45vw);
+    height: auto;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7));
+    animation: flotar-cierre 9s ease-in-out infinite;
+  }
+
+  @keyframes flotar-cierre {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-14px);
+    }
+  }
+
+  .titulo {
+    font-family: var(--f-display);
+    font-weight: 800;
+    font-size: clamp(2.3rem, 6.2vw, 4.6rem);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+  }
+
+  .plomo {
+    margin-inline: auto;
+    max-width: 44ch;
+  }
+
+  .gigante {
+    padding: 1.35rem 2.6rem;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin-top: 0.75rem;
+  }
+
+  .nota {
+    font-size: 0.85rem;
+    color: var(--txt-3);
+  }
+</style>

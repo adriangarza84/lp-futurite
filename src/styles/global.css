@@ -1,0 +1,576 @@
+/* ===================================================================
+   FUTURITÉ — SISTEMA DE DISEÑO
+   Base oscura (navy) con dos secciones "respiro": lima y azul.
+   El acento se invierte según el fondo, igual que en las piezas de RRSS.
+   =================================================================== */
+
+:root {
+  /* --- Marca --- */
+  --navy: #0a1330;
+  --navy-deep: #060c22;
+  --navy-soft: #0e1a3f;
+  --lima: #c3f53c;
+  --lima-deep: #9fd117;
+  --azul: #1a4bff;
+  --azul-light: #6f8dff;
+  --blanco: #ffffff;
+  --gris: #eef2f7;
+
+  /* --- Texto sobre navy --- */
+  --txt: #ffffff;
+  --txt-2: rgba(255, 255, 255, 0.72);
+  --txt-3: rgba(255, 255, 255, 0.5);
+
+  /* --- Superficies de vidrio --- */
+  --glass: rgba(255, 255, 255, 0.045);
+  --glass-hi: rgba(255, 255, 255, 0.075);
+  --borde: rgba(255, 255, 255, 0.1);
+  --borde-hi: rgba(255, 255, 255, 0.22);
+
+  /* --- Tipografía --- */
+  --f-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --f-body: 'Inter', system-ui, sans-serif;
+
+  /* --- Ritmo --- */
+  --ancho: 1200px;
+  --pad: clamp(1.25rem, 4vw, 2.5rem);
+  --seccion: clamp(4.5rem, 10vw, 8.5rem);
+  --radio: 20px;
+  --radio-lg: 28px;
+
+  /* --- Curvas --- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/* Reset                                                               */
+/* ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--f-body);
+  background: var(--navy);
+  color: var(--txt);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: var(--lima);
+  color: var(--navy);
+}
+
+:focus-visible {
+  outline: 3px solid var(--lima);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 999;
+  background: var(--lima);
+  color: var(--navy);
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout                                                              */
+/* ------------------------------------------------------------------ */
+
+.contenedor {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.seccion {
+  position: relative;
+  padding-block: var(--seccion);
+}
+
+/* Secciones "respiro": invierten la paleta como en el feed de la marca */
+
+.tema-lima {
+  background: var(--lima);
+  color: var(--navy);
+  --txt: var(--navy);
+  --txt-2: rgba(10, 19, 48, 0.72);
+  --txt-3: rgba(10, 19, 48, 0.55);
+  --glass: rgba(10, 19, 48, 0.045);
+  --glass-hi: rgba(10, 19, 48, 0.07);
+  --borde: rgba(10, 19, 48, 0.14);
+  --borde-hi: rgba(10, 19, 48, 0.34);
+}
+
+.tema-azul {
+  background:
+    radial-gradient(90rem 50rem at 80% -10%, #3c6bff 0%, transparent 60%),
+    linear-gradient(180deg, #123ce0 0%, #0d2bb0 100%);
+  color: var(--blanco);
+}
+
+/* ------------------------------------------------------------------ */
+/* Tipografía de escala                                                */
+/* ------------------------------------------------------------------ */
+
+.h1 {
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+}
+
+.h2 {
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+}
+
+.h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.plomo {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  color: var(--txt-2);
+  max-width: 62ch;
+}
+
+/* Patrón de titular de la marca: línea neutra + línea de acento */
+
+.acento {
+  color: var(--lima);
+}
+
+.tema-lima .acento,
+.tema-claro .acento {
+  color: var(--azul);
+}
+
+.tema-azul .acento {
+  color: var(--lima);
+}
+
+/* Antetítulo con punto pulsante */
+
+.ante {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--f-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lima);
+  margin-bottom: 1.4rem;
+}
+
+.tema-lima .ante {
+  color: var(--azul);
+}
+
+.ante::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 0 currentColor;
+  animation: latido 2.4s var(--ease) infinite;
+}
+
+@keyframes latido {
+  0% {
+    box-shadow: 0 0 0 0 rgba(195, 245, 60, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 11px rgba(195, 245, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(195, 245, 60, 0);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Botones                                                             */
+/* ------------------------------------------------------------------ */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.05rem 2rem;
+  border-radius: 999px;
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  text-align: center;
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    background-color 0.35s var(--ease),
+    color 0.35s var(--ease);
+  will-change: transform;
+}
+
+.btn svg {
+  flex: none;
+  transition: transform 0.35s var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+}
+
+/* Primario — lima, el CTA de WhatsApp */
+
+.btn-lima {
+  background: var(--lima);
+  color: var(--navy);
+  box-shadow: 0 10px 34px -12px rgba(195, 245, 60, 0.75);
+}
+
+.btn-lima:hover {
+  background: #d3ff5c;
+  box-shadow: 0 18px 48px -12px rgba(195, 245, 60, 0.95);
+}
+
+.btn-lima:hover svg {
+  transform: scale(1.12) rotate(-6deg);
+}
+
+/* Anillo de pulso: mantiene el CTA "vivo" sin ser molesto */
+
+.btn-lima::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid var(--lima);
+  opacity: 0;
+  animation: pulso 3.6s var(--ease) infinite;
+  pointer-events: none;
+}
+
+@keyframes pulso {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  55%,
+  100% {
+    transform: scale(1.16);
+    opacity: 0;
+  }
+}
+
+/* Secundario — contorno */
+
+.btn-linea {
+  border: 1.5px solid var(--borde-hi);
+  color: var(--txt);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+}
+
+.btn-linea:hover {
+  border-color: var(--lima);
+  color: var(--lima);
+  background: rgba(195, 245, 60, 0.06);
+}
+
+/* Azul — para secciones lima */
+
+.btn-azul {
+  background: var(--azul);
+  color: #fff;
+  box-shadow: 0 10px 34px -12px rgba(26, 75, 255, 0.85);
+}
+
+.btn-azul:hover {
+  background: #2f5cff;
+  box-shadow: 0 18px 48px -12px rgba(26, 75, 255, 1);
+}
+
+/* Blanco — para la sección azul */
+
+.btn-blanco {
+  background: #fff;
+  color: var(--azul);
+  box-shadow: 0 10px 34px -14px rgba(0, 0, 0, 0.55);
+}
+
+.btn-blanco:hover {
+  background: var(--lima);
+  color: var(--navy);
+}
+
+/* CTA de enlace en línea */
+
+/* Inline (no flex) para que la flecha siga al texto cuando el enlace
+   se parte en varias líneas */
+.cta-linea {
+  display: inline;
+  font-family: var(--f-display);
+  font-weight: 700;
+  color: var(--lima);
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s var(--ease);
+}
+
+.cta-linea svg {
+  display: inline-block;
+  vertical-align: -0.2em;
+  margin-left: 0.45rem;
+  transition: margin 0.3s var(--ease);
+}
+
+.cta-linea:hover svg {
+  margin-left: 0.8rem;
+  margin-right: -0.35rem;
+}
+
+.tema-lima .cta-linea {
+  color: var(--azul);
+}
+
+.cta-linea:hover {
+  border-color: currentColor;
+}
+
+.grupo-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tarjetas de vidrio + hover con glow                                 */
+/* ------------------------------------------------------------------ */
+
+.card {
+  position: relative;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border-radius: var(--radio-lg);
+  background: var(--glass);
+  border: 1px solid var(--borde);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  transition:
+    transform 0.5s var(--ease),
+    border-color 0.5s var(--ease),
+    background-color 0.5s var(--ease);
+  will-change: transform;
+}
+
+/* Glow que sigue al cursor — alimentado por --mx/--my desde JS */
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    22rem 22rem at var(--mx, 50%) var(--my, 0%),
+    rgba(195, 245, 60, 0.16),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--borde-hi);
+  background: var(--glass-hi);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.tema-lima .card::before {
+  background: radial-gradient(
+    22rem 22rem at var(--mx, 50%) var(--my, 0%),
+    rgba(26, 75, 255, 0.14),
+    transparent 65%
+  );
+}
+
+.card > * {
+  position: relative;
+}
+
+/* ------------------------------------------------------------------ */
+/* Iconos                                                              */
+/* ------------------------------------------------------------------ */
+
+.icono {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 17px;
+  background: rgba(195, 245, 60, 0.1);
+  border: 1px solid rgba(195, 245, 60, 0.26);
+  color: var(--lima);
+  margin-bottom: 1.5rem;
+  transition:
+    transform 0.5s var(--ease),
+    box-shadow 0.5s var(--ease);
+}
+
+.card:hover .icono {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 12px 32px -12px rgba(195, 245, 60, 0.6);
+}
+
+.tema-lima .icono {
+  background: rgba(26, 75, 255, 0.09);
+  border-color: rgba(26, 75, 255, 0.28);
+  color: var(--azul);
+}
+
+.tema-lima .card:hover .icono {
+  box-shadow: 0 12px 32px -12px rgba(26, 75, 255, 0.6);
+}
+
+/* ------------------------------------------------------------------ */
+/* Resplandores de fondo                                               */
+/* ------------------------------------------------------------------ */
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-azul {
+  background: rgba(26, 75, 255, 0.34);
+}
+
+.glow-lima {
+  background: rgba(195, 245, 60, 0.17);
+}
+
+/* Malla técnica de fondo */
+
+.malla {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(60rem 40rem at 50% 0%, #000 0%, transparent 78%);
+}
+
+/* ------------------------------------------------------------------ */
+/* Reveal al hacer scroll                                              */
+/* ------------------------------------------------------------------ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.85s var(--ease),
+    transform 0.85s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Accesibilidad: apagar el movimiento                                 */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,194 @@
+---
+import Icono from './Icono.astro';
+import { pasos } from '../data/site.js';
+
+const iconos = ['chat', 'lupa', 'ruta', 'cohete'];
+---
+
+<section class="seccion proceso" id="proceso">
+  <div class="contenedor">
+    <header class="cabecera">
+      <p class="ante reveal">Cómo empezamos</p>
+      <h2 class="h2 reveal" style="--d:80ms">
+        Escalar tu negocio<br />
+        <span class="acento">es más fácil de lo que crees.</span>
+      </h2>
+    </header>
+
+    <ol class="ruta" data-ruta>
+      <!-- Riel que se dibuja cuando la sección entra en pantalla -->
+      <div class="riel" aria-hidden="true"><span class="relleno"></span></div>
+
+      {
+        pasos.map((p, i) => (
+          <li class="paso reveal" style={`--d:${i * 120}ms`}>
+            <div class="nodo">
+              <Icono nombre={iconos[i]} tam={24} />
+              <span class="orden">{i + 1}</span>
+            </div>
+            <h3 class="h3">{p.titulo}</h3>
+            <p>{p.texto}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .cabecera {
+    max-width: 44rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .ruta {
+    --g: clamp(2rem, 4vw, 2.5rem);
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--g);
+  }
+
+  /* --- Riel --- */
+
+  .riel {
+    position: absolute;
+    left: 27px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: var(--borde);
+    overflow: hidden;
+  }
+
+  .relleno {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--azul), var(--lima));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 1.6s var(--ease);
+  }
+
+  .ruta.dibujado .relleno {
+    transform: scaleY(1);
+  }
+
+  .paso {
+    position: relative;
+    padding-left: 4.75rem;
+  }
+
+  /* --- Nodo --- */
+
+  .nodo {
+    position: absolute;
+    left: 0;
+    top: -4px;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--navy-soft);
+    border: 1px solid var(--borde);
+    color: var(--lima);
+    transition:
+      transform 0.5s var(--ease),
+      border-color 0.5s var(--ease),
+      box-shadow 0.5s var(--ease);
+  }
+
+  .paso:hover .nodo {
+    transform: translateY(-3px);
+    border-color: rgba(195, 245, 60, 0.5);
+    box-shadow: 0 14px 34px -14px rgba(195, 245, 60, 0.7);
+  }
+
+  .orden {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--lima);
+    color: var(--navy);
+    font-family: var(--f-display);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .paso .h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .paso p {
+    color: var(--txt-2);
+    max-width: 34ch;
+  }
+
+  @media (min-width: 900px) {
+    .ruta {
+      --g: clamp(1.5rem, 3vw, 2.25rem);
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    /* El riel arranca y termina en el centro de los nodos extremos */
+    .riel {
+      left: 28px;
+      right: calc((100% - 3 * var(--g)) / 4 - 28px);
+      top: 27px;
+      bottom: auto;
+      width: auto;
+      height: 2px;
+    }
+
+    .relleno {
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .ruta.dibujado .relleno {
+      transform: scaleX(1);
+    }
+
+    .paso {
+      padding-left: 0;
+      padding-top: 5rem;
+    }
+
+    .nodo {
+      top: 0;
+    }
+  }
+</style>
+
+<script>
+  const ruta = document.querySelector('[data-ruta]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (ruta) {
+    if (reduce.matches || !('IntersectionObserver' in window)) {
+      ruta.classList.add('dibujado');
+    } else {
+      const io = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('dibujado');
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      io.observe(ruta);
+    }
+  }
+</script>

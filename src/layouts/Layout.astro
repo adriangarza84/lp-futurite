@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import { site, ruta } from '../data/site.js';
+
+const { titulo = site.metaTitulo, descripcion = site.metaDescripcion } =
+  Astro.props;
+
+const canonical = new URL(ruta('/'), Astro.site).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Futurité',
+  slogan: 'Agencia de Marketing Digital de Alto Rendimiento',
+  description: site.metaDescripcion,
+  url: canonical,
+  telephone: site.telefonoSedeRaw,
+  email: site.correo,
+  foundingDate: '2010',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. José Vasconcelos 345-Ote, Plaza Tanarah Piso 21',
+    addressLocality: 'San Pedro Garza García',
+    addressRegion: 'Nuevo León',
+    postalCode: '66267',
+    addressCountry: 'MX',
+  },
+  areaServed: site.ciudades.map((c) => ({ '@type': 'City', name: c })),
+  sameAs: site.redes.map((r) => r.url),
+  makesOffer: [
+    'Google Ads y Performance Marketing',
+    'Campañas en redes sociales',
+    'SEO, GEO y LLM SEO',
+  ].map((s) => ({
+    '@type': 'Offer',
+    itemOffered: { '@type': 'Service', name: s },
+  })),
+};
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#0a1330" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:site_name" content="Futurité" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href={ruta('/favicon.svg')} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Ir al contenido</a>
+    <slot />
+
+    <script>
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      /* --- Reveal al hacer scroll --- */
+      const items = document.querySelectorAll('.reveal');
+
+      if (reduce.matches || !('IntersectionObserver' in window)) {
+        items.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+        );
+        items.forEach((el) => io.observe(el));
+      }
+
+      /* --- Glow que sigue al cursor dentro de cada tarjeta --- */
+      if (!reduce.matches && window.matchMedia('(hover: hover)').matches) {
+        document.querySelectorAll('.card').forEach((card) => {
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            card.style.setProperty('--my', `${e.clientY - r.top}px`);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

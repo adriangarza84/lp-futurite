@@ -1,0 +1,263 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { datos2026, fuentes, waLink } from '../data/site.js';
+---
+
+<!-- Segunda "respiro": azul eléctrico. Es el bloque de urgencia. -->
+<section class="seccion tema-azul contexto" id="ahora">
+  <div class="malla"></div>
+
+  <div class="contenedor">
+    <header class="cabecera">
+      <p class="ante reveal">Por qué invertir ahora</p>
+      <h2 class="h2 reveal" style="--d:80ms">
+        El comportamiento de compra cambió.<br />
+        <span class="acento">Tu marketing no puede quedarse atrás.</span>
+      </h2>
+      <p class="plomo reveal" style="--d:150ms">
+        Ya no basta con "estar en internet". Lo digital dejó de ser un canal
+        más: hoy concentra el <strong>59% de toda la inversión publicitaria en
+        México</strong> y es el motor que jala el crecimiento del mercado. Quien
+        no está ahí, con estrategia, no compite.
+      </p>
+    </header>
+
+    <p class="acelera reveal" style="--d:200ms">Y 2026 acelera todo:</p>
+
+    <div class="datos">
+      {
+        datos2026.map((d, i) => (
+          <article class="card dato reveal" style={`--d:${i * 110}ms`}>
+            <p class="cifra">{d.cifra}</p>
+            <p class="texto">{d.texto}</p>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- Bloque de remate: el ranking de la IA -->
+    <div class="ventana reveal">
+      <div class="ranking" aria-hidden="true">
+        <p class="rotulo">Respuesta de la IA</p>
+        <ol>
+          <li class="ok"><span>1</span> Marca relevante</li>
+          <li class="ok tuya"><span>2</span> Tu marca</li>
+          <li class="ok"><span>3</span> Marca relevante</li>
+          <li class="fuera"><span>4</span> Fuera del corte</li>
+          <li class="fuera mas"><span>5</span> Fuera del corte</li>
+        </ol>
+      </div>
+
+      <div class="argumento">
+        <p class="grande">
+          El recorrido de compra ya no empieza en Google.
+          <span class="acento">Empieza en una conversación con IA.</span>
+        </p>
+        <p>
+          Y ahí solo aparecen las 3 a 5 primeras marcas que el algoritmo
+          considera relevantes. El resto, simplemente no existe para el
+          comprador.
+        </p>
+        <p>
+          Esta es la ventana: las marcas que ajustan su estrategia hoy —Google
+          Ads, redes y SEO + GEO— capturan esa demanda mientras la competencia
+          aún no reacciona. Las que esperan, la ven pasar.
+        </p>
+
+        <a
+          class="btn btn-blanco"
+          href={waLink('Hola, quiero capturar demanda antes que mi competencia')}
+          target="_blank"
+          rel="noopener"
+        >
+          <IconoWhatsapp tam={20} />
+          Quiero capturar esa demanda
+        </a>
+      </div>
+    </div>
+
+    <p class="fuentes reveal">Fuentes: {fuentes}</p>
+  </div>
+</section>
+
+<style>
+  .contexto {
+    overflow: hidden;
+  }
+
+  .contexto .contenedor {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cabecera {
+    max-width: 52rem;
+  }
+
+  .cabecera .plomo {
+    margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .cabecera .plomo strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .acelera {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-block: clamp(2.5rem, 5vw, 3.5rem) 1.5rem;
+  }
+
+  /* --- Tres datos --- */
+
+  .datos {
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.4rem);
+  }
+
+  .dato {
+    background: rgba(255, 255, 255, 0.13);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .dato::before {
+    background: radial-gradient(
+      22rem 22rem at var(--mx, 50%) var(--my, 0%),
+      rgba(195, 245, 60, 0.22),
+      transparent 65%
+    );
+  }
+
+  .cifra {
+    font-family: var(--f-display);
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--lima);
+    margin-bottom: 0.9rem;
+  }
+
+  .texto {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.98rem;
+  }
+
+  /* --- Bloque ventana --- */
+
+  .ventana {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: center;
+    margin-top: clamp(3rem, 6vw, 5rem);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    border-radius: var(--radio-lg);
+    background: rgba(6, 12, 34, 0.34);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(14px);
+  }
+
+  .rotulo {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0.9rem;
+  }
+
+  .ranking ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .ranking li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem;
+    border-radius: 13px;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 0.92rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .ranking li span {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    font-size: 0.72rem;
+    background: rgba(255, 255, 255, 0.16);
+    flex: none;
+  }
+
+  .ranking .tuya {
+    background: var(--lima);
+    border-color: var(--lima);
+    color: var(--navy);
+    box-shadow: 0 12px 34px -14px rgba(195, 245, 60, 0.9);
+  }
+
+  .ranking .tuya span {
+    background: rgba(10, 19, 48, 0.16);
+  }
+
+  .ranking .fuera {
+    opacity: 0.34;
+    border-style: dashed;
+    background: transparent;
+  }
+
+  .ranking .mas {
+    opacity: 0.15;
+  }
+
+  .argumento {
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+  }
+
+  .argumento p {
+    color: rgba(255, 255, 255, 0.82);
+  }
+
+  .grande {
+    font-family: var(--f-display);
+    font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: #fff !important;
+  }
+
+  .argumento .btn {
+    margin-top: 0.8rem;
+  }
+
+  .fuentes {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 70ch;
+  }
+
+  @media (min-width: 820px) {
+    .datos {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .ventana {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+  }
+</style>
