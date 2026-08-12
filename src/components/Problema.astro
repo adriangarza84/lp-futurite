@@ -1,6 +1,5 @@
 ---
 import Icono from './Icono.astro';
-import { waLink } from '../data/site.js';
 ---
 
 <section class="seccion problema" id="problema">
@@ -24,18 +23,7 @@ import { waLink } from '../data/site.js';
           en las búsquedas, no pauta con estrategia o publica contenido que nadie
           convierte, <strong>le estás regalando clientes a alguien más.</strong>
         </p>
-        <p class="reveal" style="--d:220ms">
-          El problema casi nunca es tu producto. Es que nadie te encuentra —o
-          cuando te encuentra, nada lo empuja a comprar.
-        </p>
       </div>
-
-      <p class="reveal" style="--d:280ms">
-        <a class="cta-linea" href={waLink('Hola, quiero saber dónde estoy perdiendo ventas')} target="_blank" rel="noopener">
-          ¿Quieres saber dónde estás perdiendo ventas? Escríbenos por WhatsApp
-          <Icono nombre="flecha" tam={18} />
-        </a>
-      </p>
     </div>
   </div>
 </section>
@@ -79,7 +67,7 @@ import { waLink } from '../data/site.js';
   }
 
   .parrafos {
-    margin-block: 2rem 2.2rem;
+    margin-top: 2rem;
     display: grid;
     gap: 1.2rem;
     max-width: 48rem;

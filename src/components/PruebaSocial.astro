@@ -1,6 +1,5 @@
 ---
-import IconoWhatsapp from './IconoWhatsapp.astro';
-import { marcas, casoDestacado, waLink } from '../data/site.js';
+import { marcas } from '../data/site.js';
 
 // La cinta se duplica para que el bucle no tenga corte visible
 const cinta = [...marcas, ...marcas];
@@ -29,25 +28,6 @@ const cinta = [...marcas, ...marcas];
       }
     </div>
   </div>
-
-  <div class="contenedor">
-    <article class="card caso reveal">
-      <div class="cifra-caso">
-        <strong>{casoDestacado.cifra}</strong>
-        <span>{casoDestacado.unidad}</span>
-      </div>
-
-      <div class="texto-caso">
-        <p class="titulo-caso">{casoDestacado.titulo}</p>
-        <p class="detalle">{casoDestacado.detalle}</p>
-      </div>
-
-      <a class="btn btn-lima" href={waLink('Hola, quiero resultados como los de sus clientes')} target="_blank" rel="noopener">
-        <IconoWhatsapp tam={20} />
-        Quiero resultados como estos
-      </a>
-    </article>
-  </div>
 </section>
 
 <style>
@@ -70,7 +50,6 @@ const cinta = [...marcas, ...marcas];
       #000 88%,
       transparent
     );
-    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
   }
 
   .pista {
@@ -108,66 +87,4 @@ const cinta = [...marcas, ...marcas];
     transform: scale(1.06);
   }
 
-  /* --- Caso destacado --- */
-
-  .caso {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    align-items: flex-start;
-    background: linear-gradient(
-      120deg,
-      rgba(26, 75, 255, 0.16),
-      rgba(255, 255, 255, 0.04) 55%
-    );
-    border-color: rgba(111, 141, 255, 0.28);
-  }
-
-  .cifra-caso {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    flex: none;
-  }
-
-  .cifra-caso strong {
-    font-family: var(--f-display);
-    font-size: clamp(3.4rem, 8vw, 5rem);
-    font-weight: 800;
-    line-height: 0.85;
-    letter-spacing: -0.05em;
-    color: var(--lima);
-  }
-
-  .cifra-caso span {
-    font-family: var(--f-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--txt-3);
-  }
-
-  .texto-caso {
-    flex: 1;
-  }
-
-  .titulo-caso {
-    font-family: var(--f-display);
-    font-size: clamp(1.15rem, 2.2vw, 1.55rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    max-width: 24ch;
-  }
-
-  .detalle {
-    color: var(--txt-3);
-    margin-top: 0.5rem;
-  }
-
-  @media (min-width: 900px) {
-    .caso {
-      flex-direction: row;
-      align-items: center;
-    }
-  }
 </style>

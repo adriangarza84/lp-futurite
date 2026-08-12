@@ -158,13 +158,6 @@ export const marcas = [
   'Arca',
 ];
 
-export const casoDestacado = {
-  cifra: '13',
-  unidad: 'años',
-  titulo: 'llevando toda la estrategia digital de Terza',
-  detalle: 'SEO, redes y performance en Google Ads.',
-};
-
 // ---------------------------------------------------------------
 // 7 · POR QUÉ INVERTIR AHORA
 // ---------------------------------------------------------------

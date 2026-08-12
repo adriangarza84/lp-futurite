@@ -1,6 +1,6 @@
 ---
 import IconoWhatsapp from './IconoWhatsapp.astro';
-import { site, waLink } from '../data/site.js';
+import { waLink } from '../data/site.js';
 
 // Mismo mecanismo que el hero: si existe el recorte, se usa.
 const encontrado = import.meta.glob(
@@ -49,10 +49,6 @@ const astronauta = Object.values(encontrado)[0]?.default;
         <IconoWhatsapp tam={24} />
         Escalar mi negocio por WhatsApp
       </a>
-
-      <p class="nota reveal" style="--d:240ms">
-        Respuesta en minutos, en horario laboral. · {site.whatsappVisible}
-      </p>
     </div>
   </div>
 </section>
@@ -126,10 +122,5 @@ const astronauta = Object.values(encontrado)[0]?.default;
     padding: 1.35rem 2.6rem;
     font-size: clamp(1rem, 2vw, 1.2rem);
     margin-top: 0.75rem;
-  }
-
-  .nota {
-    font-size: 0.85rem;
-    color: var(--txt-3);
   }
 </style>
